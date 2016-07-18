@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.transaction.UserTransaction;
 
 /**
@@ -28,11 +29,9 @@ import javax.transaction.UserTransaction;
  */
 public class DeviceDAO implements Serializable {
 
-    public DeviceDAO(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
+    public DeviceDAO(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -43,6 +42,7 @@ public class DeviceDAO implements Serializable {
         if (device_Entity.getDataEntityList() == null) {
             device_Entity.setDataEntityList(new ArrayList<Data_Entity>());
         }
+        EntityTransaction utx = this.getEntityManager().getTransaction();
         EntityManager em = null;
         try {
             utx.begin();
@@ -82,6 +82,7 @@ public class DeviceDAO implements Serializable {
     }
 
     public void edit(Device_Entity device_Entity) throws NonexistentEntityException, RollbackFailureException, Exception {
+        EntityTransaction utx = this.getEntityManager().getTransaction();
         EntityManager em = null;
         try {
             utx.begin();
@@ -137,6 +138,7 @@ public class DeviceDAO implements Serializable {
     }
 
     public void destroy(String id) throws NonexistentEntityException, RollbackFailureException, Exception {
+        EntityTransaction utx = this.getEntityManager().getTransaction();
         EntityManager em = null;
         try {
             utx.begin();

@@ -61,15 +61,21 @@ public enum DBDeviceNames {
     }
     
     /**
-     * Given list of campus names return list of DB device names
+     * Given list of campus names return list of DB device names or null for all DB device names
      * @param campus
      * @return 
      */
     public static List<String> getCampusDBNames(List<String> campus) {
         List<String> rtVl = new ArrayList<>();
-        for (String c : campus) {
-            rtVl.add(DBDeviceNames.getDBName(c));
-        }
+        if (campus == null) {
+            for (DBDeviceNames device : DBDeviceNames.values()) {
+                rtVl.add(device.entityName);
+            }
+        } else {
+            for (String c : campus) {
+                rtVl.add(DBDeviceNames.getDBName(c));
+            }
+        }                     
         return rtVl;
     }
 }

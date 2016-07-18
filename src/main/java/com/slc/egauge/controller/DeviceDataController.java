@@ -100,7 +100,6 @@ public class DeviceDataController {
             return returnData;
         }
         // Build json object and assign string value to returnData String
-        System.out.println(campus.get(0) + "  " + endDate.toString() + "   " + startDate.toString());
         returnData = gson.toJson(ds.getDevicesByNameAndDate(campus, endDate, startDate));
         
         return returnData;

@@ -16,10 +16,13 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.slc.egauge.data.entities.Device_Entity;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.transaction.UserTransaction;
 
 /**
@@ -29,11 +32,9 @@ import javax.transaction.UserTransaction;
  */
 public class DataDAO implements Serializable {
 
-    public DataDAO(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
+    public DataDAO(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -41,6 +42,7 @@ public class DataDAO implements Serializable {
     }
 
     public void create(Data_Entity data_Entity) throws PreexistingEntityException, RollbackFailureException, Exception {
+        EntityTransaction utx = this.getEntityManager().getTransaction();
         EntityManager em = null;
         try {
             utx.begin();
@@ -74,6 +76,7 @@ public class DataDAO implements Serializable {
     }
 
     public void edit(Data_Entity data_Entity) throws NonexistentEntityException, RollbackFailureException, Exception {
+        EntityTransaction utx = this.getEntityManager().getTransaction();
         EntityManager em = null;
         try {
             utx.begin();
@@ -118,6 +121,7 @@ public class DataDAO implements Serializable {
 
     public void destroy(String id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
+        EntityTransaction utx = this.getEntityManager().getTransaction();
         try {
             utx.begin();
             em = getEntityManager();
@@ -224,6 +228,32 @@ public class DataDAO implements Serializable {
             System.out.println(e.toString());
         }
         return rtVl;
+    }
+    
+    
+    public boolean insertDataIntoTable(Device_Entity device, BigDecimal power, Date date, BigDecimal instPower) {
+        boolean result = false;
+        EntityManager em = this.getEntityManager();;
+        try {            
+            em.getTransaction().begin();
+
+            Data_Entity entity = new Data_Entity();
+            entity.setDataId(UUID.randomUUID().toString());
+            entity.setDeviceId(device);
+            entity.setPower(power);
+            entity.setTimeRecorded(date);
+            entity.setInstPower(instPower);
+            
+            em.persist(entity);
+            em.getTransaction().commit();
+            result = true;
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        } finally {
+            
+            em.close();
+        }
+        return result;
     }
 
 }

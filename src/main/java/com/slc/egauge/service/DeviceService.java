@@ -28,16 +28,15 @@ import javax.transaction.UserTransaction;
  * @author Steven Kritikos
  */
 public class DeviceService {
-    private EntityManagerFactory emf = DatabaseUtils.getEntityManager();
-    @Resource
-    private UserTransaction utx;
+    private EntityManagerFactory emf;
     
     private DataDAO datadao;
     private DeviceDAO devicedao;
     
     public DeviceService() {
-        this.datadao = new DataDAO(utx, emf);
-        this.devicedao = new DeviceDAO(utx, emf);
+        emf = DatabaseUtils.getEntityManager();
+        this.datadao = new DataDAO(emf);
+        this.devicedao = new DeviceDAO(emf);
     }
     
     public Device getDeviceByNameAndDate(String deviceName, Date startDate, Date endDate) {
