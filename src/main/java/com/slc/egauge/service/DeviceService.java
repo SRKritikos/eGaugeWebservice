@@ -64,6 +64,6 @@ public class DeviceService {
         
         return new InstantaneousDeviceReadings(mapDevices);
     }
-    
+   
     
 }

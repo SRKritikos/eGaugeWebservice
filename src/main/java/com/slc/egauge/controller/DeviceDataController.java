@@ -104,6 +104,36 @@ public class DeviceDataController {
         
         return returnData;
     }
+    
+    @GET
+    @Path("/instdata")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getInstData( @QueryParam("campus") List<String> campusParam) {
+        Gson gson = new Gson();
+        List<String> campus = null;
+        String returnData = null;
+                
+        try {
+            // populate campus array
+            if (!campusParam.isEmpty() && !campusParam.get(0).isEmpty()) {
+                campus = DBDeviceNames.getCampusDBNames(campusParam);
+            } else {
+                campus = new ArrayList<>();
+                for (DBDeviceNames deviceName : DBDeviceNames.values()) {
+                    campus.add(deviceName.getEntityName());
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            returnData = gson.toJson(e.toString());
+            return returnData;
+        }
+        // Build json object and assign string value to returnData String
+        returnData = gson.toJson(ds.getInstReadings(campus));
+        
+        return returnData;
+    }
+
 
     /**
      * PUT method for updating or creating an instance of DeviceDataController
