@@ -6,6 +6,8 @@
 package com.slc.egauge.controller;
 
 import com.google.gson.Gson;
+import com.slc.egauge.data.entities.Device_Entity;
+import com.slc.egauge.model.Device;
 import com.slc.egauge.model.Devices;
 import com.slc.egauge.service.DeviceService;
 import com.slc.egauge.utils.DBDeviceNames;
@@ -45,7 +47,8 @@ public class DeviceDataController {
      */
     public DeviceDataController() {
     }
-/**
+    
+    /**
      * getData give request parameters
      */
     @GET
@@ -112,10 +115,10 @@ public class DeviceDataController {
         Gson gson = new Gson();
         List<String> campus = null;
         String returnData = null;
-                
         try {
             // populate campus array
             if (!campusParam.isEmpty() && !campusParam.get(0).isEmpty()) {
+                System.out.println(campusParam.get(0));
                 campus = DBDeviceNames.getCampusDBNames(campusParam);
             } else {
                 campus = new ArrayList<>();
@@ -134,7 +137,25 @@ public class DeviceDataController {
         return returnData;
     }
 
+    @GET
+    @Path("/device")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getDevices(@QueryParam("campus") String campusParam) {
+        String rtVl = null;
+        Gson gson = new Gson();
+        try {
+            String campus = DBDeviceNames.getDBName(campusParam);
+            Device device = ds.getDeviceByName(campus);
+            rtVl = gson.toJson(device);
+        } catch (Exception e) {
+            rtVl = gson.toJson(e.toString());
+            System.out.println(e.toString());
+            return rtVl;
+        }
 
+        return rtVl;
+    }
+    
     /**
      * PUT method for updating or creating an instance of DeviceDataController
      * @param content representation for the resource

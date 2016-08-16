@@ -29,7 +29,7 @@ import javax.transaction.UserTransaction;
  */
 public class DeviceDAO implements Serializable {
 
-    public DeviceDAO(EntityManagerFactory emf) {
+       public DeviceDAO(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
@@ -232,5 +232,4 @@ public class DeviceDAO implements Serializable {
         
         return rtVl;
     }
-
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -42,7 +43,7 @@ public class Device_Entity implements Serializable {
     @Size(max = 60)
     @Column(name = "deviceName")
     private String deviceName;
-    @OneToMany(mappedBy = "deviceId")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "deviceId")
     private List<Data_Entity> dataEntityList;
 
     public Device_Entity() {

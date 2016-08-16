@@ -8,6 +8,7 @@ com\slc\egauge\model\InstantaneousDeviceReadings.class
 com\slc\egauge\data\entities\Data_Entity_.class
 com\slc\egauge\model\Devices.class
 com\slc\egauge\quartz\InstDataScheduler.class
+.netbeans_automatic_build
 com\slc\egauge\data\xml\instantaneous\Value.class
 com\slc\egauge\data\xml\instantaneous\TimeStamp.class
 com\slc\egauge\data\dao\DeviceDAO.class

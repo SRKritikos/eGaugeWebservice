@@ -17,7 +17,8 @@ import java.util.List;
  * @author Steven Kritikos
  */
 public class Device implements Serializable {
-    private String name;
+    private String deviceId;
+    private String deviceName;
     private List<DeviceData> deviceData;
     String message;
 
@@ -28,7 +29,8 @@ public class Device implements Serializable {
     public Device(Device_Entity device, boolean withData) {
         
         if (device != null) {
-            this.name = device.getDeviceName();
+            this.deviceId = device.getDeviceId();
+            this.deviceName = device.getDeviceName();
             this.deviceData = new ArrayList<>();
 
             if (withData) {
@@ -45,7 +47,8 @@ public class Device implements Serializable {
     public Device(Device_Entity device, List<Data_Entity> data) {
         
         if (device != null && (data != null || !data.isEmpty())) {
-            this.name = device.getDeviceName();
+            this.deviceId = device.getDeviceId();
+            this.deviceName = device.getDeviceName();
             this.deviceData = new ArrayList<>();
 
             for(Data_Entity data_entity : data) {

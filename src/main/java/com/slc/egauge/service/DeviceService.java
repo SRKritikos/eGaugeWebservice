@@ -57,12 +57,17 @@ public class DeviceService {
     }
     
     public InstantaneousDeviceReadings getInstReadings(List<String> deviceNames) {
-        Map<Device_Entity, Data_Entity> mapDevices = deviceNames.parallelStream().map(deviceName ->
+        Map<Device_Entity, Data_Entity> mapDevices = deviceNames.stream().map(deviceName ->
             devicedao.getDeviceByName(deviceName)).collect(Collectors.toMap(device -> device, 
                 device -> datadao.getMostRecentEntryForDevice(device))
         );
         
         return new InstantaneousDeviceReadings(mapDevices);
+    }
+
+    public Device getDeviceByName(String campus) {
+        Device rtVl = new Device(devicedao.getDeviceByName(campus)); 
+        return rtVl;
     }
    
     
