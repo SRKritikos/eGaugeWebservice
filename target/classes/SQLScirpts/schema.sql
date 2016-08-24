@@ -31,7 +31,9 @@ CREATE TABLE data (
     power decimal(30,15),
     instPower decimal(7,3),
     FOREIGN KEY (deviceId)
-        REFERENCES device(deviceId)
+        REFERENCES device(deviceId),
+
+    INDEX `IX_timeRecorded` (`timeRecorded`)
 );
 
 
@@ -50,10 +52,12 @@ CREATE TABLE users (
     passwordSalt BLOB NOT NULL,
     
     timeEnteredQueue DATETIME NULL,
-    availaleStartTime DATETIME NULL,
+    availableStartTime DATETIME NULL,
     availableEndTime DATETIME NULL,
     isActive boolean DEFAULT FALSE,
     extendIimeTries INT DEFAULT 0,
+    timeStartedCharging DATETIME NULL,
+    timeEndedCharging DATETIME NULL,
 
     roleId INT,
     deviceId VARCHAR(64) NULL,
@@ -62,7 +66,9 @@ CREATE TABLE users (
     FOREIGN KEY (roleId)
         REFERENCES userRoles(roleId),
     FOREIGN KEY (deviceId) 
-        REFERENCES device (deviceId)
+        REFERENCES device (deviceId),
+
+    INDEX `IX_email` (`email`)
 );
 
 SET FOREIGN_KEY_CHECKS=1;

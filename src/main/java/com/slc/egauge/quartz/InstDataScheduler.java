@@ -59,7 +59,7 @@ public class InstDataScheduler implements ServletContextListener {
                Trigger dataDumpTrigger = TriggerBuilder.newTrigger().withIdentity("trigger2")
                        .build();
                
-               scheduler.scheduleJob(job, trigger);
+               //scheduler.scheduleJob(job, trigger);
                //scheduler.scheduleJob(dataDumpjob, dataDumpTrigger);
                
             } catch (SchedulerException ex) {
