@@ -10,6 +10,7 @@ import com.slc.egauge.service.DataDumpService;
 import com.slc.egauge.service.InstantaneousScraperService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Singleton;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -30,6 +31,7 @@ import org.quartz.impl.StdSchedulerFactory;
  * 
  * @author srostantkritikos06
  */
+@Singleton
 @WebListener
 public class InstDataScheduler implements ServletContextListener {
      private Scheduler scheduler = null;
@@ -54,13 +56,7 @@ public class InstDataScheduler implements ServletContextListener {
                         .withSchedule(SimpleScheduleBuilder.simpleSchedule()
                         .withIntervalInSeconds(30).repeatForever()).build();
                
-               //DATA DUMP
-               JobDetail dataDumpjob = newJob(DataDumpService.class).withIdentity("dumpJob").build();
-               Trigger dataDumpTrigger = TriggerBuilder.newTrigger().withIdentity("trigger2")
-                       .build();
-               
-               //scheduler.scheduleJob(job, trigger);
-               //scheduler.scheduleJob(dataDumpjob, dataDumpTrigger);
+               scheduler.scheduleJob(job, trigger);
                
             } catch (SchedulerException ex) {
             Logger.getLogger(InstDataScheduler.class.getName()).log(Level.SEVERE, null, ex);

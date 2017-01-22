@@ -236,18 +236,18 @@ public class DataDAO implements Serializable {
         EntityManager em = this.getEntityManager();;
         try {            
             em.getTransaction().begin();
-
+            
             Data_Entity entity = new Data_Entity();
             entity.setDataId(UUID.randomUUID().toString());
             entity.setDeviceId(device);
             entity.setPower(power);
             entity.setTimeRecorded(date);
             entity.setInstPower(instPower);
-            
             em.persist(entity);
             em.getTransaction().commit();
             result = true;
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e.toString());
         } finally {
             

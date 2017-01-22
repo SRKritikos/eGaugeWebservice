@@ -21,15 +21,16 @@ DROP TABLE IF EXISTS userRoles;
 
 CREATE TABLE device ( 
     deviceId VARCHAR(64) PRIMARY KEY,
-    deviceName VARCHAR(60)
+    deviceName VARCHAR(60),
+    isOnline BOOLEAN
 );
 
 CREATE TABLE data (
     dataId VARCHAR(64) PRIMARY KEY,
     deviceId VARCHAR(64),
     timeRecorded datetime,
-    power decimal(30,15),
-    instPower decimal(7,3),
+    power DECIMAL(30,15),
+    instPower DECIMAL(7,3),
     FOREIGN KEY (deviceId)
         REFERENCES device(deviceId),
 
@@ -54,8 +55,8 @@ CREATE TABLE users (
     timeEnteredQueue DATETIME NULL,
     availableStartTime DATETIME NULL,
     availableEndTime DATETIME NULL,
-    isActive boolean DEFAULT FALSE,
-    extendIimeTries INT DEFAULT 0,
+    isActive BOOLEAN DEFAULT FALSE,
+    extendTimeTries INT DEFAULT 0,
     timeStartedCharging DATETIME NULL,
     timeEndedCharging DATETIME NULL,
 
@@ -78,6 +79,10 @@ INSERT INTO userRoles VALUES (null, 'admin'),
 
 LOCK TABLES `device` WRITE;
 /*!40000 ALTER TABLE `device` DISABLE KEYS */;
-INSERT INTO `device` VALUES ('1a42990f-8f22-4212-9c71-f86ae89d5af1','Cornwall_Power'),('7e4d9817-9141-4b3d-8fa4-c1b5b590a050','Kingston_Wand1_Power'),('822073b6-2e40-45a2-bbb9-551768eb86e6','Brockville_Power'),('ed28534b-9fee-423d-bac5-57670e71f6c2','Kingston_TotalPower'),('fc60a7bc-4cff-4ea3-816e-57e86a6ee43c','Kingston_Wand2_Power');
+INSERT INTO `device` VALUES ('1a42990f-8f22-4212-9c71-f86ae89d5af1','Cornwall_Power', true),('7e4d9817-9141-4b3d-8fa4-c1b5b590a050','Kingston_Wand1_Power', true),('822073b6-2e40-45a2-bbb9-551768eb86e6','Brockville_Power',true),('ed28534b-9fee-423d-bac5-57670e71f6c2','Kingston_TotalPower', true),('fc60a7bc-4cff-4ea3-816e-57e86a6ee43c','Kingston_Wand2_Power',true);
 /*!40000 ALTER TABLE `device` ENABLE KEYS */;
 UNLOCK TABLES;
+
+-- LOAD DATA LOCAL INFILE 'data.csv' INTO TABLE data
+-- FIELDS TERMINATED BY ','  
+-- LINES TERMINATED BY '\n';

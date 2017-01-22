@@ -35,12 +35,8 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("data")
 public class DeviceDataController {
-
-    @Context
-    private UriInfo context;
-    
-    DeviceService ds = new DeviceService();
-    DateFormat dfDateTime = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+    private DeviceService ds = new DeviceService();
+    private DateFormat dfDateTime = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
 
     /**
      * Creates a new instance of DeviceDataController

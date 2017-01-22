@@ -78,6 +78,6 @@ public class InstantaneousScraperService implements Job {
             Logger.getLogger(InstantaneousScraperService.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Inst data service error thrown");
         }
-        
+        System.out.println("FINISHED SCRAPPING DATA ");
     }
 }
