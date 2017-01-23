@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -35,6 +36,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("data")
 public class DeviceDataController {
+    @EJB
     private DeviceService ds = new DeviceService();
     private DateFormat dfDateTime = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
 
@@ -114,7 +116,6 @@ public class DeviceDataController {
         try {
             // populate campus array
             if (!campusParam.isEmpty() && !campusParam.get(0).isEmpty()) {
-                System.out.println(campusParam.get(0));
                 campus = DBDeviceNames.getCampusDBNames(campusParam);
             } else {
                 campus = new ArrayList<>();
@@ -141,8 +142,10 @@ public class DeviceDataController {
         Gson gson = new Gson();
         try {
             String campus = DBDeviceNames.getDBName(campusParam);
-            Device device = ds.getDeviceByName(campus);
-            rtVl = gson.toJson(device);
+            if (!campus.isEmpty()){
+              Device device = ds.getDeviceByName(campus);
+              rtVl = gson.toJson(device);
+            }
         } catch (Exception e) {
             rtVl = gson.toJson(e.toString());
             System.out.println(e.toString());
@@ -150,16 +153,5 @@ public class DeviceDataController {
         }
 
         return rtVl;
-    }
-    
-    /**
-     * PUT method for updating or creating an instance of DeviceDataController
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(Devices content) {
-    }
-    
-    
+    }   
 }

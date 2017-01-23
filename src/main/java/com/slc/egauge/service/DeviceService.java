@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.annotation.Resource;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
 
@@ -27,6 +28,7 @@ import javax.transaction.UserTransaction;
  * 
  * @author Steven Kritikos
  */
+@Stateless
 public class DeviceService {
     private EntityManagerFactory emf;
     

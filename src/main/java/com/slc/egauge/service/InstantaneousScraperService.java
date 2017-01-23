@@ -10,13 +10,16 @@ import com.slc.egauge.data.dao.DeviceDAO;
 import com.slc.egauge.data.entities.Data_Entity;
 import com.slc.egauge.data.entities.Device_Entity;
 import com.slc.egauge.data.xml.instantaneous.Data;
+import com.slc.egauge.utils.ApplicationProperties;
 import com.slc.egauge.utils.DatabaseUtils;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Singleton;
 import javax.persistence.EntityManagerFactory;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -31,16 +34,20 @@ import org.quartz.JobExecutionException;
  * 
  * @author srostantkritikos06
  */
+@Singleton
 public class InstantaneousScraperService implements Job {
     EntityManagerFactory emf;
     DataDAO datadao;
     DeviceDAO devicedao;
     Data_Entity prevDevice;
+    Properties appProperties;
 
     public InstantaneousScraperService() {
         this.emf = DatabaseUtils.getEntityManager();
         this.datadao =  new DataDAO(emf);
         this.devicedao  = new DeviceDAO(emf);
+        ApplicationProperties props = new ApplicationProperties();
+        this.appProperties = props.getApplicationProperties();
     }
     
     
@@ -54,7 +61,7 @@ public class InstantaneousScraperService implements Job {
     private void getInstData() {
         try {
             // Build XML Enitty Data class from url stream. 
-            URL url = new URL("http://egauge5593.egaug.es/cgi-bin/egauge?inst");
+            URL url = new URL(this.appProperties.getProperty("url.dataendpoint"));
             JAXBContext jc = JAXBContext.newInstance(Data.class);
             Unmarshaller um = jc.createUnmarshaller();
             Data inputData = (Data) um.unmarshal(url);
