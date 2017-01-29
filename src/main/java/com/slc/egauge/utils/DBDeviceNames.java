@@ -55,6 +55,9 @@ public enum DBDeviceNames {
                 case "BROCKVILLE":
                     rtVl =  BROCKVILLE.entityName;
                     break;
+                case "Kingston_Wand1_Power": 
+                    rtVl = KINGSTON_1.entityName;
+                    break;
                 default:
                     rtVl = "";
                     break;

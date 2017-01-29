@@ -6,9 +6,7 @@
 package com.slc.egauge.controller;
 
 import com.google.gson.Gson;
-import com.slc.egauge.data.entities.Device_Entity;
 import com.slc.egauge.model.Device;
-import com.slc.egauge.model.Devices;
 import com.slc.egauge.service.DeviceService;
 import com.slc.egauge.utils.DBDeviceNames;
 import java.text.DateFormat;
@@ -17,15 +15,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
@@ -34,9 +26,8 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Steven
  */
-@Path("data")
+@Path("devices")
 public class DeviceDataController {
-    @EJB
     private DeviceService ds = new DeviceService();
     private DateFormat dfDateTime = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
 
@@ -135,23 +126,32 @@ public class DeviceDataController {
     }
 
     @GET
-    @Path("/device")
     @Produces(MediaType.APPLICATION_JSON)
     public String getDevices(@QueryParam("campus") String campusParam) {
         String rtVl = null;
         Gson gson = new Gson();
         try {
-            String campus = DBDeviceNames.getDBName(campusParam);
-            if (!campus.isEmpty()){
-              Device device = ds.getDeviceByName(campus);
-              rtVl = gson.toJson(device);
+            if (campusParam == null) {
+                List<Device> devices =  new ArrayList();
+                for (String deviceName : DBDeviceNames.getCampusDBNames(null)) {
+                    devices.add( ds.getDeviceByName(deviceName) );
+                }
+                rtVl = gson.toJson(devices);
+            } else {
+                String campus = DBDeviceNames.getDBName(campusParam);
+                if (!campus.isEmpty()){
+                  Device device = ds.getDeviceByName(campus);
+                  rtVl = gson.toJson(device);
+                } else {
+                  rtVl = gson.toJson("failed to parse campus");
+                }
             }
         } catch (Exception e) {
+          e.printStackTrace();
             rtVl = gson.toJson(e.toString());
             System.out.println(e.toString());
             return rtVl;
         }
-
         return rtVl;
     }   
 }

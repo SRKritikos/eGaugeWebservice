@@ -209,6 +209,7 @@ public class DataDAO implements Serializable {
                     .setParameter("endDate", endDate)
                     .getResultList();
         } catch (Exception e) {
+          e.printStackTrace();
             System.out.println(e.toString());
         }
         return rtVl;

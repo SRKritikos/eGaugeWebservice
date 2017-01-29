@@ -225,6 +225,7 @@ public class DeviceDAO implements Serializable {
                     .setParameter("deviceName", name)
                     .getSingleResult();
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e.toString());
         }   finally {
             em.close();

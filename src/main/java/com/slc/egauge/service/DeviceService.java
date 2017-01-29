@@ -18,17 +18,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.annotation.Resource;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManagerFactory;
-import javax.transaction.UserTransaction;
 
 /**
  * Service for retrieving device and device data
  * 
  * @author Steven Kritikos
  */
-@Stateless
 public class DeviceService {
     private EntityManagerFactory emf;
     
@@ -68,9 +64,7 @@ public class DeviceService {
     }
 
     public Device getDeviceByName(String campus) {
-        Device rtVl = new Device(devicedao.getDeviceByName(campus)); 
+        Device rtVl = new Device(devicedao.getDeviceByName(campus), false); 
         return rtVl;
-    }
-   
-    
+    } 
 }

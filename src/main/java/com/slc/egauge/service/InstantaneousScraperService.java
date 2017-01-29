@@ -34,7 +34,6 @@ import org.quartz.JobExecutionException;
  * 
  * @author srostantkritikos06
  */
-@Singleton
 public class InstantaneousScraperService implements Job {
     EntityManagerFactory emf;
     DataDAO datadao;

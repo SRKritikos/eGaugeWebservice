@@ -31,7 +31,6 @@ import org.quartz.impl.StdSchedulerFactory;
  * 
  * @author srostantkritikos06
  */
-@Singleton
 @WebListener
 public class InstDataScheduler implements ServletContextListener {
      private Scheduler scheduler = null;

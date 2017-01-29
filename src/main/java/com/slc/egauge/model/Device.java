@@ -31,9 +31,10 @@ public class Device implements Serializable {
         if (device != null) {
             this.deviceId = device.getDeviceId();
             this.deviceName = device.getDeviceName();
-            this.deviceData = new ArrayList<>();
+            
 
             if (withData) {
+                this.deviceData = new ArrayList<>();
                 for (Data_Entity data_entity : device.getDataEntityList())
                 {
                     DeviceData tempData = new DeviceData(data_entity);
