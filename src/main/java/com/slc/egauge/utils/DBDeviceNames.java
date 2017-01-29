@@ -58,6 +58,18 @@ public enum DBDeviceNames {
                 case "Kingston_Wand1_Power": 
                     rtVl = KINGSTON_1.entityName;
                     break;
+                case "Kingston_Wand2_Power":
+                    rtVl = KINGSTON_2.entityName;
+                    break;
+                case "Kingston_TotalPower":
+                    rtVl = KINGSTON_TOTAL.entityName;
+                    break;
+                case "Cornwall_Power":
+                    rtVl =  CORNWALL.entityName;
+                    break;
+                case "Brockville_Power":
+                    rtVl =  BROCKVILLE.entityName;
+                    break;
                 default:
                     rtVl = "";
                     break;
