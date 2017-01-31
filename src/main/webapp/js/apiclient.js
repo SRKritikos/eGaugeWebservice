@@ -8,7 +8,16 @@ $(document).ready(function(){
   showDevices()
   showDeviceData()
   showDeviceInstData()
-})
+  dataparams = ["startDate", "endDate", "campus" ];
+  datadesc = ["Starting date of data lookup. Formated as 'yyyy-MM-dd HH:mm:ss'", "Ending date of data lookup. Formated as 'yyyy-MM-dd HH:mm:ss'", "Name of campus for retrieved data" ];
+  datadefaults = ["Current day and time", "90 days before startDate parameter", "All devices"];
+  buildParametersTable(dataparams, datadesc, datadefaults, $("#dataParamsTable"));
+  instdataparam = ["campus"];
+  instdatadesc = ["Name of campus for retrieved device data"];
+  instdatadefaults = ["All devices"];
+  buildParametersTable(instdataparam, instdatadesc, instdatadefaults, $("#instDataParamsTable"));
+  buildParametersTable(instdataparam, instdatadesc, instdatadefaults, $("#deviceParamsTable"));
+});
 
 function showDevices() {
   $out = $("#devicejsonoutput");
@@ -31,6 +40,18 @@ function outputJson(element, data) {
   element.append($code);
 }
 
+function buildParametersTable(parameters, descriptions, defaults, target) {
+  var $table = $("<table></table>").addClass("table table-striped");
+  var $header = $("<tr><th>Parameter</th><th>Description</th><th>Default</th></tr>").appendTo($table);
+  parameters.forEach(function(e,i){
+    var $row = $("<tr></tr>");
+    var $params = $("<td></td>").html(e).appendTo($row);
+    var $description = $("<td></td>").html(descriptions[i]).appendTo($row);
+    var $defaults = $("<td></td>").html(defaults[i]).appendTo($row);
+    $row.appendTo($table);
+  });
+  $table.appendTo(target);
+}
 
 
 devicedata = {

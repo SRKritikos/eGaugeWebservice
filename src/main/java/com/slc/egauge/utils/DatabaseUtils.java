@@ -20,7 +20,7 @@ public class DatabaseUtils {
         
         Map<String, String> persistenceMap = new HashMap<String, String>();
         persistenceMap.put("javax.persistence.jdbc.user", "root");
-        persistenceMap.put("javax.persistence.jdbc.password", "");
+        persistenceMap.put("javax.persistence.jdbc.password", "mysql");
         
         emf = Persistence.createEntityManagerFactory("com.slc_eGaugeWebService_war_1.2-SNAPSHOTPU", persistenceMap);
         return emf;

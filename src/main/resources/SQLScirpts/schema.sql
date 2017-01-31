@@ -80,3 +80,4 @@ LOCK TABLES `device` WRITE;
 INSERT INTO `device` VALUES ('1a42990f-8f22-4212-9c71-f86ae89d5af1','Cornwall_Power', true),('7e4d9817-9141-4b3d-8fa4-c1b5b590a050','Kingston_Wand1_Power', true),('822073b6-2e40-45a2-bbb9-551768eb86e6','Brockville_Power',true),('ed28534b-9fee-423d-bac5-57670e71f6c2','Kingston_TotalPower', true),('fc60a7bc-4cff-4ea3-816e-57e86a6ee43c','Kingston_Wand2_Power',true);
 /*!40000 ALTER TABLE `device` ENABLE KEYS */;
 UNLOCK TABLES;
+
